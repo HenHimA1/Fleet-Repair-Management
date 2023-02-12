@@ -1,0 +1,102 @@
+<odoo>
+  <data>
+
+    <record id="partner_technician" model="res.partner">
+      <field name="name">Technician</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="company_name">YourCompany</field>
+      <field name="street">3575 Buena Vista Avenue</field>
+      <field name="city">Eugene</field>
+      <field name="state_id" model="res.country.state" search="[('code','ilike','OR')]" />
+      <field name="zip">97401</field>
+      <field name="country_id" ref="base.us" />
+      <field name="tz">Europe/Brussels</field>
+      <field name="email">mark.brown23@example.com</field>
+      <field name="phone">(441)-695-2334</field>
+    </record>
+
+    <record id="user_technician" model="res.users">
+      <field name="partner_id" ref="partner_technician" />
+      <field name="name">Technician</field>
+      <field name="login">technician</field>
+      <field name="password">technician</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="groups_id"
+        eval="[(4, ref('base.group_user')), (4, ref('fleet_repair_management.group_fleet_repair_technician'))]" />
+    </record>
+
+    <record id="partner_head_technician" model="res.partner">
+      <field name="name">Head Technician</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="company_name">YourCompany</field>
+      <field name="street">3575 Buena Vista Avenue</field>
+      <field name="city">Eugene</field>
+      <field name="state_id" model="res.country.state" search="[('code','ilike','OR')]" />
+      <field name="zip">97401</field>
+      <field name="country_id" ref="base.us" />
+      <field name="tz">Europe/Brussels</field>
+      <field name="email">mark.brown23@example.com</field>
+      <field name="phone">(441)-695-2334</field>
+    </record>
+
+    <record id="user_head_technician" model="res.users">
+      <field name="partner_id" ref="partner_head_technician" />
+      <field name="name">Head Technician</field>
+      <field name="login">headtechnician</field>
+      <field name="password">headtechnician</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="groups_id"
+        eval="[(4, ref('base.group_user')), (4, ref('fleet_repair_management.group_fleet_repair_head_technician'))]" />
+    </record>
+
+    <record id="partner_service_manager" model="res.partner">
+      <field name="name">Service Manager</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="company_name">YourCompany</field>
+      <field name="street">3575 Buena Vista Avenue</field>
+      <field name="city">Eugene</field>
+      <field name="state_id" model="res.country.state" search="[('code','ilike','OR')]" />
+      <field name="zip">97401</field>
+      <field name="country_id" ref="base.us" />
+      <field name="tz">Europe/Brussels</field>
+      <field name="email">mark.brown23@example.com</field>
+      <field name="phone">(441)-695-2334</field>
+    </record>
+
+    <record id="user_service_manager" model="res.users">
+      <field name="partner_id" ref="partner_service_manager" />
+      <field name="name">Service Manager</field>
+      <field name="login">servicemanager</field>
+      <field name="password">servicemanager</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="groups_id"
+        eval="[(4, ref('base.group_user')), (4, ref('fleet_repair_management.group_fleet_repair_service_manager'))]" />
+    </record>
+
+    <record id="partner_director_commercial" model="res.partner">
+      <field name="name">Director Commercial</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="company_name">YourCompany</field>
+      <field name="street">3575 Buena Vista Avenue</field>
+      <field name="city">Eugene</field>
+      <field name="state_id" model="res.country.state" search="[('code','ilike','OR')]" />
+      <field name="zip">97401</field>
+      <field name="country_id" ref="base.us" />
+      <field name="tz">Europe/Brussels</field>
+      <field name="email">mark.brown23@example.com</field>
+      <field name="phone">(441)-695-2334</field>
+    </record>
+
+    <record id="user_director_commercial" model="res.users">
+      <field name="partner_id" ref="partner_director_commercial" />
+      <field name="name">Director Commercial</field>
+      <field name="login">directorcommercial</field>
+      <field name="password">directorcommercial</field>
+      <field name="company_id" ref="base.main_company" />
+      <field name="groups_id"
+        eval="[(4, ref('base.group_user')), (4, ref('fleet_repair_management.group_fleet_repair_director_commercial'))]" />
+    </record>
+
+
+  </data>
+</odoo>

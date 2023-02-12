@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_repair_view_form" model="ir.ui.view">
+        <field name="name">fleet.repair.view.form</field>
+        <field name="model">fleet.repair</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Repair">
+                <header>
+                    <button name="action_create_fleet_diagnosis" string="Create Fleet Diagnosis"
+                        type="object"
+                        class="oe_highlight" states="received" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="received,diagnosis,sent,approved,progress,done" />
+                </header>
+                <sheet>
+                    <field name="diagnosis_ids" invisible="1" />
+                    <field name="sale_ids" invisible="1" />
+                    <field name="work_order_ids" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                            type="object"
+                            name="action_view_diagnosis"
+                            icon="fa-pencil-square"
+                            attrs="{'invisible': [('diagnosis_count', '=', 0)]}">
+                            <field string="Diagnosis" name="diagnosis_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button"
+                            type="object"
+                            name="action_view_sale"
+                            icon="fa-dollar"
+                            attrs="{'invisible': [('sale_count', '=', 0)]}"
+                            groups="fleet_repair_management.group_fleet_repair_service_manager">
+                            <field string="Sales Orders" name="sale_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button"
+                            type="object"
+                            name="action_view_work_order"
+                            icon="fa-wrench"
+                            attrs="{'invisible': [('work_order_count', '=', 0)]}">
+                            <field string="Work Order" name="work_order_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subject" />
+                            <field name="user_id" />
+                        </group>
+                        <group>
+                            <field name="priority" widget="priority" />
+                            <field name="receipt_date" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="general" string="General">
+                            <group name="client" string="Client Info">
+                                <group>
+                                    <field name="partner_id" />
+                                    <field name="contact_name" />
+                                </group>
+                                <group>
+                                    <field name="phone" />
+                                    <field name="mobile" />
+                                    <field name="email" />
+                                    <field name="contact_number" />
+                                </group>
+                            </group>
+                            <group name="fleet_info" string="Fleet Info">
+                                <field name="line_ids" colspan="2" nolabel="1">
+                                    <tree string="Fleet Info">
+                                        <field name="repair_id" invisible="1" />
+                                        <field name="vehicle_id" />
+                                        <field name="license_plate" />
+                                        <field name="model_id" />
+                                        <field name="vin_sn" />
+                                        <field name="fuel_type" />
+                                        <field name="is_guarantee" />
+                                        <field name="service_id" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group name="notes" string="Notes">
+                                <field name="notes" colspan="2" nolabel="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- Attachment preview -->
+                <div class="o_attachment_preview" />
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_repair_view_tree" model="ir.ui.view">
+        <field name="name">fleet.repair.view.tree</field>
+        <field name="model">fleet.repair</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Repair">
+                <field name="subject" />
+                <field name="partner_id" />
+                <field name="contact_number" />
+                <field name="receipt_date" />
+                <field name="user_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_repair_action" model="ir.actions.act_window">
+        <field name="name">Fleet Repair</field>
+        <field name="res_model">fleet.repair</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="fleet_repair_line_view_form" model="ir.ui.view">
+        <field name="name">fleet.repair.line.view.form</field>
+        <field name="model">fleet.repair.line</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Line">
+                <header>
+                    <button name="action_enter_result" string="Enter Results" type="object"
+                        class="oe_highlight" states="diagnosis" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,diagnosis,done" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_id" />
+                            <field name="license_plate" />
+                            <field name="vin_sn" />
+                        </group>
+                        <group>
+                            <field name="model_id" />
+                            <field name="fuel_type" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="detail" string="Service Details">
+                            <group>
+                                <group>
+                                    <field name="is_guarantee" widget="radio" />
+                                    <field name="guarantee_type" widget="radio" />
+                                </group>
+                                <group>
+                                    <field name="service_id" />
+                                </group>
+                            </group>
+                            <group name="servvice_detail" string="Service Details">
+                                <field name="notes" colspan="2" nolabel="1" />
+                            </group>
+                        </page>
+                        <page name="report" string="Diagnosis Report"
+                            attrs="{'invisible': [('state', '!=', 'done')]}">
+                            <group name="spare_parts" string="Spare Parts">
+                                <field name="part_ids" colspan="2" nolabel="1" readonly="0">
+                                    <tree editable="bottom">
+                                        <field name="product_id" />
+                                        <field name="code" />
+                                        <field name="qty" />
+                                        <field name="price_unit" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group name="diagnostic_results" string="Diagnostic Results">
+                                <field name="results" colspan="2" nolabel="1" readonly="0"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="fleet_repair_menu_root"
+        name="Fleet Repair"
+        sequence="221" 
+        web_icon="fleet_repair_management,static/description/icon.png"/>
+
+    <menuitem
+        id="fleet_repair_menu"
+        name="Fleet Repair"
+        parent="fleet_repair_menu_root"
+        sequence="1" />
+
+    <menuitem
+        id="fleet_repair_tree_menu"
+        name="Fleet Repair"
+        action="fleet_repair_action"
+        parent="fleet_repair_menu"
+        groups="group_fleet_repair_head_technician"
+        sequence="1" />
+
+</odoo>

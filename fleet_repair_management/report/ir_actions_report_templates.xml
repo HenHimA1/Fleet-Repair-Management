@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_fleet_repair_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <h2 class="mt-4">
+                            <span t-field="doc.name" />
+                        </h2>
+
+                        <div class="row my-4">
+                            <div class="col-5">
+                                <strong>Client Address</strong>
+                                <br />
+                                <span t-field="doc.partner_id.name" />
+                                <br />
+                                <span t-field="doc.partner_id.street" />
+                                <br />
+                                <strong>Phone:</strong>
+                                <span t-field="doc.partner_id.phone" />
+                                <br />
+                                <strong>Email:</strong>
+                                <span t-field="doc.partner_id.email" />
+                            </div>
+                            <div class="col-2">
+                                <strong>Contact Name</strong>
+                                <span t-field="doc.partner_id.name" />
+                                <strong>Tel:</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>Date of Receipt</strong>
+                                <span t-field="doc.receipt_date" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-sm o_main_table table-borderless">
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th name="th_fleet" class="text-start">Fleet</th>
+                                        <th name="th_modelnumber" class="text-center">Model Number</th>
+                                        <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                        <th name="th_guarantee" class="text-center">Guarantee</th>
+                                        <th name="th_service_type" class="text-center">Service Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="doc.line_ids" t-as="line_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="line_id.is_guarantee" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span
+                                                    t-field="line_id.service_id.display_name" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="my-4">
+                            <strong>SERVICE DETAILS:</strong>
+                        </div>
+
+                        <div class="mt-4 row">
+                            <t t-foreach="doc.line_ids" t-as="line_id">
+                                <div class="col-4">
+                                    <strong t-field="line_id.vehicle_id.name" />
+                                </div>
+                                <div class="col-4"> | <span t-field="line_id.notes" />
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_fleet_repair_label">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-foreach="doc.line_ids" t-as="line_id">
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <h2 t-field="doc.name" />
+                                </div>
+                                <div class="col-6 text-end">
+                                    <span t-field="doc.receipt_date" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <table class="table table-border">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-start">Client</td>
+                                            <td>
+                                                <span t-field="doc.partner_id.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">Fleet</td>
+                                            <td>
+                                                <span t-field="line_id.vehicle_id.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">No Serial</td>
+                                            <td>
+                                                <span t-field="line_id.model_id.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">Service</td>
+                                            <td>
+                                                <span t-field="line_id.service_id.display_name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start">Description</td>
+                                            <td>
+                                                <span t-field="line_id.notes" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_fleet_diagnostic_request">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <h2 class="mt-4">
+                            <span t-field="doc.name" />
+                        </h2>
+
+                        <div class="row my-4">
+                            <div class="col-5">
+                                <strong>Client Address</strong>
+                                <br />
+                                <span t-field="doc.partner_id.name" />
+                                <br />
+                                <span t-field="doc.partner_id.street" />
+                                <br />
+                                <strong>Phone:</strong>
+                                <span t-field="doc.partner_id.phone" />
+                                <br />
+                                <strong>Email:</strong>
+                                <span t-field="doc.partner_id.email" />
+                            </div>
+                            <div class="col-2">
+                                <strong>Contact Name</strong>
+                                <span t-field="doc.partner_id.name" />
+                                <strong>Tel:</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>Date of Receipt</strong>
+                                <span t-field="doc.receipt_date" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-sm o_main_table table-borderless">
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th name="th_fleet" class="text-start">Fleet</th>
+                                        <th name="th_modelnumber" class="text-center">Model Number</th>
+                                        <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                        <th name="th_guarantee" class="text-center">Guarantee</th>
+                                        <th name="th_service_type" class="text-center">Service Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="repair_line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="repair_line_id.is_guarantee" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span
+                                                    t-field="repair_line_id.service_id.display_name" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="my-4">
+                            <strong>SERVICE DETAILS:</strong>
+                        </div>
+
+                        <div class="mt-4 row">
+                            <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                <div class="col-4">
+                                    <strong t-field="repair_line_id.vehicle_id.name" />
+                                </div>
+                                <div class="col-4"> | <span t-field="repair_line_id.notes" />
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_fleet_diagnostic_result">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <h2 class="mt-4">
+                            <span t-field="doc.name" />
+                        </h2>
+
+                        <div class="row my-4">
+                            <div class="col-5">
+                                <strong>Client Address</strong>
+                                <br />
+                                <span t-field="doc.partner_id.name" />
+                                <br />
+                                <span t-field="doc.partner_id.street" />
+                                <br />
+                                <strong>Phone:</strong>
+                                <span t-field="doc.partner_id.phone" />
+                                <br />
+                                <strong>Email:</strong>
+                                <span t-field="doc.partner_id.email" />
+                            </div>
+                            <div class="col-2">
+                                <strong>Contact Name</strong>
+                                <span t-field="doc.partner_id.name" />
+                                <strong>Tel:</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>Date of Receipt</strong>
+                                <span t-field="doc.receipt_date" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-sm o_main_table table-borderless">
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th name="th_fleet" class="text-start">Fleet</th>
+                                        <th name="th_modelnumber" class="text-center">Model Number</th>
+                                        <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                        <th name="th_guarantee" class="text-center">Guarantee</th>
+                                        <th name="th_service_type" class="text-center">Service Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="repair_line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="repair_line_id.is_guarantee" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span
+                                                    t-field="repair_line_id.service_id.display_name" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="my-4">
+                            <strong>DIAGNOSTIC<br>RESULT:</br></strong>
+                        </div>
+
+                        <table class="table table-sm o_main_table table-borderless">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th name="th_fleet" class="text-start">Fleet</th>
+                                    <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                    <th name="th_guarantee" class="text-center">Spare Part</th>
+                                    <th name="th_guarantee" class="text-center">Code</th>
+                                    <th name="th_service_type" class="text-center">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+                                <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                    <t t-foreach="repair_line_id.part_ids" t-as="part_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="repair_line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="part_id.product_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="part_id.code" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span t-field="part_id.qty" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4 row">
+                            <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                <div class="col-4">
+                                    <strong t-field="repair_line_id.vehicle_id.name" />
+                                </div>
+                                <div class="col-4"> | <span t-field="repair_line_id.results" />
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_fleet_work_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <h2 class="mt-4">
+                            <span t-field="doc.name" />
+                        </h2>
+
+                        <div class="row my-4">
+                            <div class="col-5">
+                                <strong>Client Address</strong>
+                                <br />
+                                <span t-field="doc.partner_id.name" />
+                                <br />
+                                <span t-field="doc.partner_id.street" />
+                                <br />
+                                <strong>Phone:</strong>
+                                <span t-field="doc.partner_id.phone" />
+                                <br />
+                                <strong>Email:</strong>
+                                <span t-field="doc.partner_id.email" />
+                            </div>
+                            <div class="col-2">
+                                <strong>Contact Name</strong>
+                                <span t-field="doc.partner_id.name" />
+                                <strong>Tel:</strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>Date of Receipt</strong>
+                                <span t-field="doc.repair_id.receipt_date" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-sm o_main_table table-borderless">
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th name="th_fleet" class="text-start">Fleet</th>
+                                        <th name="th_modelnumber" class="text-center">Model Number</th>
+                                        <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                        <th name="th_guarantee" class="text-center">Guarantee</th>
+                                        <th name="th_service_type" class="text-center">Service Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="doc.repair_line_ids" t-as="line_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="line_id.is_guarantee" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span
+                                                    t-field="line_id.service_id.display_name" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="my-4">
+                            <strong>SERVICE DETAILS:</strong>
+                        </div>
+
+                        <div class="mt-4 row">
+                            <t t-foreach="doc.repair_line_ids" t-as="line_id">
+                                <div class="col-4">
+                                    <strong t-field="line_id.vehicle_id.name" />
+                                </div>
+                                <div class="col-4"> | <span t-field="line_id.notes" />
+                                </div>
+                            </t>
+                        </div>
+
+                        <div class="my-4">
+                            <strong>DIAGNOSTIC<br>RESULT:</br></strong>
+                        </div>
+
+                        <table class="table table-sm o_main_table table-borderless">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th name="th_fleet" class="text-start">Fleet</th>
+                                    <th name="th_serialnumber" class="text-center">Serial Number</th>
+                                    <th name="th_guarantee" class="text-center">Spare Part</th>
+                                    <th name="th_guarantee" class="text-center">Code</th>
+                                    <th name="th_service_type" class="text-center">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+                                <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                    <t t-foreach="repair_line_id.part_ids" t-as="part_id">
+                                        <tr>
+                                            <td name="td_fleet">
+                                                <span t-field="repair_line_id.vehicle_id.name" />
+                                            </td>
+                                            <td name="td_modelnumber" class="text-center">
+                                                <span t-field="repair_line_id.model_id.name" />
+                                            </td>
+                                            <td name="td_serialnumber" class="text-center">
+                                                <span t-field="part_id.product_id.name" />
+                                            </td>
+                                            <td name="td_guarantee" class="text-center">
+                                                <span t-field="part_id.code" />
+                                            </td>
+                                            <td name="td_service_type" class="text-center">
+                                                <span t-field="part_id.qty" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4 row">
+                            <t t-foreach="doc.repair_line_ids" t-as="repair_line_id">
+                                <div class="col-4">
+                                    <strong t-field="repair_line_id.vehicle_id.name" />
+                                </div>
+                                <div class="col-4"> | <span t-field="repair_line_id.results" />
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_sale_order_fleet_repair" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@name='informations_date']" position="before">
+            <div t-if="doc.repair_id" class="col-auto col-3 mw-100 mb-2" name="informations_date">
+                <strong t-if="doc.state in ['draft', 'sent']">Your Reference:</strong>
+                <p class="m-0" t-field="doc.repair_id.subject" />
+            </div>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_description" class="text-start" t-if="doc.repair_id">Model #</th>
+            <th name="th_description" class="text-start" t-if="doc.repair_id">License Plate</th>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_model_name" t-if="doc.repair_id">
+                <span t-field="line.fleet_model_id.name" />
+            </td>
+            <td name="td_license_plate" t-if="doc.repair_id">
+                <span t-field="line.license_plate" />
+            </td>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_fleet_repair" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@name='origin']" position="after">
+            <div class="col-auto col-3 mw-100 mb-2" t-if="o.repair_ids" name="reference_repair">
+                <strong>Reference:</strong>
+                <t t-foreach="o.repair_ids" t-as="repair_id">
+                    <p class="m-0" t-field="repair_id.subject" />
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_description" class="text-start" t-if="o.repair_ids">Model #</th>
+            <th name="th_description" class="text-start" t-if="o.repair_ids">License Plate</th>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_model_name" t-if="o.repair_ids">
+                <span t-field="line.fleet_model_id.name" />
+            </td>
+            <td name="td_license_plate" t-if="o.repair_ids">
+                <span t-field="line.license_plate" />
+            </td>
+        </xpath>
+    </template>
+</odoo>

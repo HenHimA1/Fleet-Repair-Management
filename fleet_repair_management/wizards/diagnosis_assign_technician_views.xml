@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="diagnosis_assign_technician_view_form" model="ir.ui.view">
+        <field name="name">diagnosis.assign.technician.view.form</field>
+        <field name="model">diagnosis.assign.technician</field>
+        <field name="arch" type="xml">
+            <form string="Assign to Technician">
+                <sheet>
+                    <group>
+                        <field name="diagnosis_id" invisible="1" />
+                        <field name="technician_id" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Assign" name="action_confirm" type="object" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

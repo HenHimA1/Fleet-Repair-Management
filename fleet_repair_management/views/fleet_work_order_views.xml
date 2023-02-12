@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_work_order_view_form" model="ir.ui.view">
+        <field name="name">fleet.work.order.view.form</field>
+        <field name="model">fleet.work.order</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Work Order" create="false">
+                <header>
+                    <button name="action_start" string="Start" type="object" states="draft" />
+                    <button name="action_cancel" string="Cancel Order" type="object" states="progress" />
+                    <button name="action_pending" string="Pending" type="object" states="progress" />
+                    <button name="action_resume" string="Resume" type="object" states="pending" />
+                    <button name="action_finished" string="Finished" type="object" states="progress" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,progress,finished" />
+                </header>
+                <sheet>
+                    <field name="repair_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_repair"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('repair_count', '=', 0)]}">
+                            <field string="Repair Order" name="repair_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button"
+                            type="object"
+                            name="action_view_diagnosis"
+                            icon="fa-pencil-square"
+                            attrs="{'invisible': [('diagnosis_count', '=', 0)]}">
+                            <field string="Diagnosis" name="diagnosis_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_sale"
+                            icon="fa-dollar"
+                            attrs="{'invisible': [('sale_count', '=', 0)]}"
+                            groups="fleet_repair_management.group_fleet_repair_service_manager">
+                            <field string="Sales Orders" name="sale_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subject" />
+                            <field name="partner_id" />
+                        </group>
+                        <group>
+                            <field name="date" />
+                            <field name="priority" widget="priority" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="information" string="Information">
+                            <group>
+                                <group name="planned_date" string="Planned Date">
+                                    <field name="scheduled_start_date" />
+                                    <field name="scheduled_end_date" />
+                                </group>
+                                <group name="duration" string="Duration">
+                                    <field name="number_hour" />
+                                </group>
+                            </group>
+                            <group name="actual_repairing_date" string="Actual Repairing Date">
+                                <group>
+                                    <field name="actual_start_date" />
+                                    <field name="actual_end_date" />
+                                </group>
+                                <group>
+                                    <field name="duration" />
+                                    <field name="work_hour" />
+                                </group>
+                            </group>
+                            <group name="fleet_info" string="Fleet Info">
+                                <field name="repair_line_ids" colspan="2" nolabel="1">
+                                    <tree string="Fleet Info">
+                                        <field name="repair_id" invisible="1" />
+                                        <field name="vehicle_id" />
+                                        <field name="license_plate" />
+                                        <field name="model_id" />
+                                        <field name="vin_sn" />
+                                        <field name="fuel_type" />
+                                        <field name="is_guarantee" />
+                                        <field name="service_id" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_work_order_view_tree" model="ir.ui.view">
+        <field name="name">fleet.work.order.view.tree</field>
+        <field name="model">fleet.work.order</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Work Order" create="false">
+                <field name="subject" />
+                <field name="phone" />
+                <field name="technician_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_work_order_action" model="ir.actions.act_window">
+        <field name="name">Fleet Work Order</field>
+        <field name="res_model">fleet.work.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+        id="fleet_work_order_menu"
+        name="Work Orders"
+        action="fleet_work_order_action"
+        parent="fleet_repair_menu"
+        sequence="3" />
+
+</odoo>

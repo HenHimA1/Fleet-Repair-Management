@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_fleet_repair_label" model="report.paperformat">
+        <field name="name">Fleet Repair Label Sheet</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">140</field>
+        <field name="page_width">79</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="action_report_fleet_repair_receipt" model="ir.actions.report">
+        <field name="name">Fleet Repair Receipt</field>
+        <field name="model">fleet.repair</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fleet_repair_management.report_fleet_repair_receipt</field>
+        <field name="report_file">fleet_repair_management.report_fleet_repair_receipt</field>
+        <field name="print_report_name">'Fleet Repair Receipt - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fleet_repair"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_fleet_repair_label" model="ir.actions.report">
+        <field name="name">Fleet Repair Label</field>
+        <field name="model">fleet.repair</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fleet_repair_management.report_fleet_repair_label</field>
+        <field name="report_file">fleet_repair_management.report_fleet_repair_label</field>
+        <field name="paperformat_id" ref="paperformat_fleet_repair_label"/>
+        <field name="print_report_name">'Fleet Repair Label - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fleet_repair"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_fleet_diagnostic_result" model="ir.actions.report">
+        <field name="name">Fleet Diagnostic Result</field>
+        <field name="model">fleet.diagnosis</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fleet_repair_management.report_fleet_diagnostic_result</field>
+        <field name="report_file">fleet_repair_management.report_fleet_diagnostic_result</field>
+        <field name="print_report_name">'Fleet Diagnostic Result - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fleet_diagnosis"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_fleet_diagnostic_request" model="ir.actions.report">
+        <field name="name">Fleet Diagnostic Request</field>
+        <field name="model">fleet.diagnosis</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fleet_repair_management.report_fleet_diagnostic_request</field>
+        <field name="report_file">fleet_repair_management.report_fleet_diagnostic_request</field>
+        <field name="print_report_name">'Fleet Diagnostic Request - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fleet_diagnosis"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_fleet_work_order" model="ir.actions.report">
+        <field name="name">Fleet Work Order</field>
+        <field name="model">fleet.work.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fleet_repair_management.report_fleet_work_order</field>
+        <field name="report_file">fleet_repair_management.report_fleet_work_order</field>
+        <field name="print_report_name">'Fleet Work Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fleet_work_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

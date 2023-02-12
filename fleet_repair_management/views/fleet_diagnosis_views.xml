@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_diagnosis_view_form" model="ir.ui.view">
+        <field name="name">fleet.diagnosis.view.form</field>
+        <field name="model">fleet.diagnosis</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Diagnosis" create="false">
+                <header>
+                    <button name="action_assign_to_technician" string="Assign to Technician"
+                        type="object" class="oe_highlight" states="draft"
+                        groups="fleet_repair_management.group_fleet_repair_head_technician" />
+                    <button name="action_create_quotation" string="Create Quotation"
+                        type="object" class="oe_highlight"
+                        states="progress"
+                        groups="fleet_repair_management.group_fleet_repair_service_manager" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,progress,complete" />
+                </header>
+                <sheet>
+                    <field name="repair_id" invisible="1" />
+                    <field name="sale_ids" invisible="1" />
+                    <field name="sale_count" invisible="1" />
+                    <field name="user_id" invisible="1" />
+                    <field name="repair_line_ids" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_repair"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('repair_count', '=', 0)]}">
+                            <field string="Repair Order" name="repair_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_sale"
+                            icon="fa-dollar"
+                            attrs="{'invisible': [('sale_count', '=', 0)]}"
+                            groups="fleet_repair_management.group_fleet_repair_service_manager">
+                            <field string="Sales Orders" name="sale_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subject" />
+                            <field name="technician_id" />
+                        </group>
+                        <group>
+                            <field name="priority" widget="priority" />
+                            <field name="receipt_date" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="general" string="General">
+                            <group name="client" string="Client Info">
+                                <group>
+                                    <field name="partner_id" />
+                                    <field name="contact_name" />
+                                </group>
+                                <group>
+                                    <field name="phone" />
+                                    <field name="mobile" />
+                                    <field name="email" />
+                                    <field name="contact_number" />
+                                </group>
+                            </group>
+                            <group name="fleet_info" string="Fleet Info">
+                                <field name="line_ids" colspan="2" nolabel="1"
+                                    domain="[('repair_id','=',repair_id)]">
+                                    <tree string="Fleet Info" create="false" delete="false">
+                                        <field name="diagnosis_id" invisible="1" />
+                                        <field name="vehicle_id" />
+                                        <field name="license_plate" />
+                                        <field name="model_id" />
+                                        <field name="vin_sn" />
+                                        <field name="fuel_type" />
+                                        <field name="is_guarantee" />
+                                        <field name="service_id" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group name="notes" string="Notes">
+                                <field name="notes" colspan="2" nolabel="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- Attachment preview -->
+                <div class="o_attachment_preview" />
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_diagnosis_view_tree" model="ir.ui.view">
+        <field name="name">fleet.diagnosis.view.tree</field>
+        <field name="model">fleet.diagnosis</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Diagnosis" create="false">
+                <field name="subject" />
+                <field name="partner_id" />
+                <field name="receipt_date" />
+                <field name="user_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_diagnosis_action" model="ir.actions.act_window">
+        <field name="name">Fleet Diagnosis</field>
+        <field name="res_model">fleet.diagnosis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+        id="fleet_diagnosis_menu"
+        name="Fleet Diagnosis"
+        action="fleet_diagnosis_action"
+        parent="fleet_repair_menu"
+        groups="group_fleet_repair_head_technician"
+        sequence="2" />
+</odoo>

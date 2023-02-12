@@ -1,0 +1,1 @@
+from . import diagnosis_assign_technician
